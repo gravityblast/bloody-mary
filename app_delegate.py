@@ -1,8 +1,10 @@
 from Foundation import *
 from AppKit import *
+from session import Session
 
 class AppDelegate(NSObject):
   def applicationDidFinishLaunching_(self, app):
+    self.session = None
     self.init_status_bar()
     self.init_menu()
 
@@ -23,4 +25,8 @@ class AppDelegate(NSObject):
     self.status_item.setMenu_(self.menu)
 
   def start_(self, notification):
-    self.menu_item_start.setTitle_('Stop')
+    if self.session != None:
+      self.session.stop()
+    self.session = Session()
+    self.session.start()
+
